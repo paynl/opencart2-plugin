@@ -175,6 +175,13 @@ class Pay_Controller_Admin extends Controller {
             $this->data['sort_order'] = $settings[$this->_paymentMethodName . '_sort_order'];
         }
 
+        $this->data['instructions'] = '';
+        if (isset($this->request->post[$this->_paymentMethodName . '_instructions'])) {
+            $this->data['instructions'] = $this->request->post[$this->_paymentMethodName . '_instructions'];
+        } elseif (isset($settings[$this->_paymentMethodName . '_instructions'])) {
+            $this->data['instructions'] = $settings[$this->_paymentMethodName . '_instructions'];
+        }
+
 
 
         $this->data['heading_title'] = $this->document->getTitle();

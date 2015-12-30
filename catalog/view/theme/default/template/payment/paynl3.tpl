@@ -1,5 +1,12 @@
 <div id="paynl_payment"></div>
 <?php
+if(!empty($instructions)){
+?>
+<div class="well well-sm">
+    <p><?php echo nl2br($instructions); ?></p>
+</div>
+<?php } ?>
+<?php
 if(!empty($optionSubList)){
 ?>
 <div class="buttons">

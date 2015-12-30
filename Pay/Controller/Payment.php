@@ -29,6 +29,8 @@ class Pay_Controller_Payment extends Controller
             die('Payment method not available');
         }
 
+        $this->data['instructions'] = $settings[$this->_paymentMethodName.'_instructions'];
+
         $this->data['optionSubList'] = array();
 
         if ($this->_paymentOptionId == 10 && !empty($paymentOption['optionSubs'])) {
