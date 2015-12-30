@@ -106,16 +106,22 @@ class Pay_Controller_Admin extends Controller {
 
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-       
+
+        if (isset($this->request->post[$this->_paymentMethodName . '_confirm_on_start'])) {
+            $this->data['confirm_on_start'] = $this->request->post[$this->_paymentMethodName . '_confirm_on_start'];
+        } elseif (isset($settings[$this->_paymentMethodName . '_confirm_on_start'])) {
+            $this->data['confirm_on_start'] = $settings[$this->_paymentMethodName . '_confirm_on_start'];
+        }
+        if (!isset($this->data['confirm_on_start'])) {
+            $this->data['confirm_on_start'] = '1';
+        }
+
         if (isset($this->request->post[$this->_paymentMethodName . '_send_status_updates'])) {
-       
             $this->data['send_status_updates'] = $this->request->post[$this->_paymentMethodName . '_send_status_updates'];
         } elseif (isset($settings[$this->_paymentMethodName . '_send_status_updates'])) {
-        
             $this->data['send_status_updates'] = $settings[$this->_paymentMethodName . '_send_status_updates'];
         }
         if (!isset($this->data['send_status_updates'])) {
-       
             $this->data['send_status_updates'] = '1';
         }
         

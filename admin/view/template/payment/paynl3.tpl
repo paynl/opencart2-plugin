@@ -80,6 +80,20 @@
 						</div>
 					</div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="<?php echo $payment_method_name; ?>_confirm_on_start"><span data-toggle="tooltip" title="De order bevestigen bij het starten van de transactie, dus voordat er betaald is. De bevestigingsmail wordt dan ook meteen verstuurd">Order bevestigen bij starten transactie</span></label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="<?php echo $payment_method_name; ?>_confirm_on_start">
+                                <?php if ($confirm_on_start == 1) { ?>
+                                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                                <option value="0"><?php echo $text_disabled; ?></option>
+                                <?php } else { ?>
+                                <option value="1"><?php echo $text_enabled; ?></option>
+                                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="<?php echo $payment_method_name; ?>_send_status_updates"><span data-toggle="tooltip" title="De gebruiker een email sturen als de status van de bestelling veranderd">Statusupdates versturen</span></label>
                         <div class="col-sm-10">
                             <select class="form-control" name="<?php echo $payment_method_name; ?>_send_status_updates">

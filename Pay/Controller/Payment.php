@@ -16,6 +16,7 @@ class Pay_Controller_Payment extends Controller
         $this->load->model('setting/setting');
         $settings = $this->model_setting_setting->getSetting('paynl');
 
+
         $serviceId = $settings[$this->_paymentMethodName.'_serviceid'];
 
         // paymentoption ophalen
@@ -56,8 +57,6 @@ class Pay_Controller_Payment extends Controller
 
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-
-        // var_dump($order_info);
 
         $response = array();
         try {
@@ -198,8 +197,10 @@ class Pay_Controller_Payment extends Controller
 
             $message = 'Pay.nl Transactie aangemaakt. TransactieId: '.$result['transaction']['transactionId'].' .<br />';
 
-            $this->model_checkout_order->addOrderHistory($order_info['order_id'],
-                $statusPending, $message, false);
+            $confirm_on_start = $settings[$this->_paymentMethodName.'_confirm_on_start'];
+            if($confirm_on_start == 1){
+                $this->model_checkout_order->addOrderHistory($order_info['order_id'], $statusPending, $message, false);
+            }
 
             $response['success'] = $result['transaction']['paymentURL'];
         } catch (Pay_Api_Exception $e) {
