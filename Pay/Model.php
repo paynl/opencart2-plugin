@@ -292,6 +292,10 @@ class Pay_Model extends Model {
             } else {
                 $send_status_update = false;
             }
+            if($order_info['order_status_id'] == 0 && $status != self::STATUS_COMPLETE && !$send_status_update){
+                // hij is nog niet confirmed, we gaan hem alleen opslaan als status complete is
+                return $status;
+            }
             $this->model_checkout_order->addOrderHistory($order_info['order_id'], $orderStatusId, $message, $send_status_update);
         }
 
