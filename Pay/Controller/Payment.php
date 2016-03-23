@@ -118,7 +118,7 @@ class Pay_Controller_Payment extends Controller
             $arrEnduser = array(
                 'initials' => $initialsShipping,
                 'lastName' => $order_info['shipping_lastname'],
-                'language' => $order_info['language_code'],
+                'language' => substr($order_info['language_code'],0,2),
                 'emailAddress' => $order_info['email'],
                 'address' => $arrShippingAddress,
                 'invoiceAddress' => $arrPaymentAddress,
