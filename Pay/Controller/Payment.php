@@ -42,7 +42,7 @@ class Pay_Controller_Payment extends Controller
             return $this->load->view($this->config->get('config_template').'/template/payment/paynl3.tpl',
                     $this->data);
         } else {
-            return $this->load->view('default/template/payment/paynl3.tpl',
+            return $this->load->view('payment/paynl3.tpl',
                     $this->data);
         }
     }
@@ -158,27 +158,32 @@ class Pay_Controller_Payment extends Controller
             }
 
             $arrTotals = array();
-            $total                = 0;
             $taxes                = $this->cart->getTaxes();
+
+            $arrTotals = array(
+                'totals' => array(),
+                'taxes' => $taxes,
+                'total' => 0,
+            );
 
             $this->load->model('extension/extension');
 
             $results = $this->model_extension_extension->getExtensions('total');
 
-           
+
 
             foreach ($results as $result) {
                 if ($this->config->get($result['code'].'_status')) {
                     $this->load->model('total/'.$result['code']);
 
-                    $this->{'model_total_'.$result['code']}->getTotal($arrTotals, $total, $taxes);
+                    $this->{'model_total_'.$result['code']}->getTotal($arrTotals);
 
                     $test = $this->{'model_total_'.$result['code']};
 
                 }
             }
 
-            foreach($arrTotals as $total){
+            foreach($arrTotals['totals'] as $total){
                 if($total['code'] == 'paycharge'){
                     $apiStart->addProduct('0', $total['title'], round($total['value']*100), 1, 'H');
                 }
