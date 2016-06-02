@@ -46,8 +46,7 @@ class Pay_Controller_Payment extends Controller
         $this->data);
     } else
     {
-      return $this->load->view('default/template/payment/paynl3.tpl',
-        $this->data);
+      return $this->load->view('payment/paynl3.tpl', $this->data);
     }
   }
 
@@ -147,32 +146,41 @@ class Pay_Controller_Payment extends Controller
       }
 
 
-      $arrTotals = array();
-      $total = 0;
       $taxes = $this->cart->getTaxes();
+
       $this->load->model('extension/extension');
       $results = $this->model_extension_extension->getExtensions('total');
+
+      $totals= array();
+      $total = 0;
+      $arrTotals = array(
+        'totals' => &$totals,
+        'taxes'  => &$taxes,
+        'total'  => &$total
+      );
+
       $taxesForTotals = array();
 
 
       foreach ($results as $result)
       {
-        $taxesBefore = array_sum($taxes);
+        $taxesBefore = array_sum($arrTotals['taxes']);
 
         if ($this->config->get($result['code'] . '_status'))
         {
           $this->load->model('total/' . $result['code']);
-          $this->{'model_total_' . $result['code']}->getTotal($arrTotals, $total, $taxes);
-          $taxAfter = array_sum($taxes);
+          $this->{'model_total_' . $result['code']}->getTotal($arrTotals);
+          $taxAfter = array_sum($arrTotals['taxes']);
           $taxesForTotals[$result['code']] = $taxAfter - $taxesBefore;
         }
       }
 
-      foreach ($arrTotals as $total_row)
+      foreach ($arrTotals['totals'] as $total_row)
       {
-        if(!in_array($total_row['code'], array('sub_total', 'tax', 'total'))){
-          $totalIncl = $total_row['value']+$taxesForTotals[$total_row['code']];
-          $apiStart->addProduct($total_row['code'],$total_row['title'], round($totalIncl*100), 1, Pay_Helper::calculateTaxClass($totalIncl, $taxesForTotals[$total_row['code']]));
+        if (!in_array($total_row['code'], array('sub_total', 'tax', 'total')))
+        {
+          $totalIncl = $total_row['value'] + $taxesForTotals[$total_row['code']];
+          $apiStart->addProduct($total_row['code'], $total_row['title'], round($totalIncl * 100), 1, Pay_Helper::calculateTaxClass($totalIncl, $taxesForTotals[$total_row['code']]));
         }
       }
 
