@@ -66,24 +66,27 @@ class Pay_Helper
     return $newArray;
   }
 
-  public static function splitAddress($strAddress)
-  {
-    $strAddress = trim($strAddress);
+    public static function splitAddress($strAddress)
+    {
+        $strAddress = trim($strAddress);
+        $a = preg_split('/(\\s+)([0-9]+)/', $strAddress, 2,
+            PREG_SPLIT_DELIM_CAPTURE);
+        $strStreetName = trim(array_shift($a));
+        $strStreetNumber = trim(implode('', $a));
+        if (empty($strStreetName) || empty($strStreetNumber)) { // American address notation
+            $a = preg_split('/([a-zA-Z]{2,})/', $strAddress, 2,
+                PREG_SPLIT_DELIM_CAPTURE);
+            $strStreetNumber = trim(array_shift($a));
+            $strStreetName = implode('', $a);
+        }
 
-    $a = preg_split('/([0-9]+)/', $strAddress, 2, PREG_SPLIT_DELIM_CAPTURE);
-    $strStreetName = trim(array_shift($a));
-    $strStreetNumber = trim(implode('', $a));
+        // if streetnumber > 10 the api will throw an error, so we just omit the address
+        if(strlen($strStreetNumber)>10){
+            return array('', '');
+        }
 
-    if (empty($strStreetName))
-    { // American address notation
-      $a = preg_split('/([a-zA-Z]{2,})/', $strAddress, 2, PREG_SPLIT_DELIM_CAPTURE);
-
-      $strStreetNumber = trim(implode('', $a));
-      $strStreetName = trim(array_shift($a));
+        return array($strStreetName, $strStreetNumber);
     }
-
-    return array($strStreetName, $strStreetNumber);
-  }
 
   /**
    * Determine the tax class to send to Pay.nl
