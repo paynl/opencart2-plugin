@@ -36,7 +36,7 @@ if(!empty($optionSubList)){
             data.optionSubId = jQuery('#optionsub').val();
         }
         jQuery.ajax({
-            url: 'index.php?route=payment/<?php echo $paymentMethodName;?>/startTransaction',
+            url: 'index.php?route=extension/payment/<?php echo $paymentMethodName;?>/startTransaction',
             dataType: 'json',
             data: data,
             type: 'POST',

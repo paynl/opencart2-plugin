@@ -11,7 +11,7 @@ class Pay_Controller_Admin extends Controller {
     protected $error;
     
     public function index() {
-        $this->load->language('payment/' . $this->_paymentMethodName); // . $payment);
+        $this->load->language('extension/payment/' . $this->_paymentMethodName); // . $payment);
         $this->load->model('setting/setting');
         $this->document->setTitle('Pay.nl - ' . $this->_defaultLabel);
 
@@ -198,7 +198,7 @@ class Pay_Controller_Admin extends Controller {
         $this->load->model('localisation/order_status');
         $this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-        $this->data['action'] = $this->url->link('payment/' . $this->_paymentMethodName, 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['action'] = $this->url->link('extension/payment/' . $this->_paymentMethodName, 'token=' . $this->session->data['token'], 'SSL');
         $this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
         $this->data['breadcrumbs'] = array();
@@ -217,7 +217,7 @@ class Pay_Controller_Admin extends Controller {
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->document->getTitle(),
-            'href' => $this->url->link('payment/' . $this->_paymentMethodName, 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('extension/payment/' . $this->_paymentMethodName, 'token=' . $this->session->data['token'], 'SSL'),
             'separator' => ' :: '
         );
 
@@ -233,7 +233,7 @@ class Pay_Controller_Admin extends Controller {
     }
 
     public function validate() {
-        if (!$this->user->hasPermission('modify', "payment/$this->_paymentMethodName")) {
+        if (!$this->user->hasPermission('modify', "extension/payment/$this->_paymentMethodName")) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
         // als de betaalmethode disabled is maken de instellingen niet uit
@@ -246,16 +246,16 @@ class Pay_Controller_Admin extends Controller {
         } else {
 
             try {
-                $this->load->model('payment/paynl3');
+                $this->load->model('extension/payment/paynl3');
                 
                         
                 $serviceId = $this->request->post[$this->_paymentMethodName . '_serviceid'];
                 $apiToken = $this->request->post[$this->_paymentMethodName . '_apitoken'];
                 
                 //eerst refreshen
-                $this->model_payment_paynl3->refreshPaymentOptions($serviceId, $apiToken);
+                $this->model_extension_payment_paynl3->refreshPaymentOptions($serviceId, $apiToken);
                 
-                $paymentOption = $this->model_payment_paynl3->getPaymentOption($serviceId, $this->_paymentOptionId);
+                $paymentOption = $this->model_extension_payment_paynl3->getPaymentOption($serviceId, $this->_paymentOptionId);
                 
                 if(!$paymentOption){
                     $this->error['apitoken'] = "Deze betaalmethode is niet geactiveerd voor deze dienst. Ga naar  <a target='paynl' href='https://admin.pay.nl/programs/programs'>https://admin.pay.nl/programs/programs</a> om dit aan te passen.";
@@ -286,9 +286,9 @@ class Pay_Controller_Admin extends Controller {
     }
 
     public function install() {
-        $this->load->model('payment/paynl3');
+        $this->load->model('extension/payment/paynl3');
 
-        $this->model_payment_paynl3->createTables();
+        $this->model_extension_payment_paynl3->createTables();
     }
 
 }

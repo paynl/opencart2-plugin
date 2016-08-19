@@ -20,8 +20,8 @@ class Pay_Controller_Payment extends Controller
         $serviceId = $settings[$this->_paymentMethodName . '_serviceid'];
 
         // paymentoption ophalen
-        $this->load->model('payment/' . $this->_paymentMethodName);
-        $modelName = 'model_payment_' . $this->_paymentMethodName;
+        $this->load->model('extension/payment/' . $this->_paymentMethodName);
+        $modelName = 'model_extension_payment_' . $this->_paymentMethodName;
         $paymentOption = $this->$modelName->getPaymentOption($serviceId,
             $this->_paymentOptionId);
 
@@ -45,7 +45,7 @@ class Pay_Controller_Payment extends Controller
 
     public function startTransaction()
     {
-        $this->load->model('payment/' . $this->_paymentMethodName);
+        $this->load->model('extension/payment/' . $this->_paymentMethodName);
 
         $this->load->model('checkout/order');
         $this->load->model('setting/setting');
@@ -62,8 +62,8 @@ class Pay_Controller_Payment extends Controller
             $apiStart->setApiToken($settings[$this->_paymentMethodName . '_apitoken']);
             $apiStart->setServiceId($settings[$this->_paymentMethodName . '_serviceid']);
 
-            $returnUrl = $this->url->link('payment/' . $this->_paymentMethodName . '/finish');
-            $exchangeUrl = $this->url->link('payment/' . $this->_paymentMethodName . '/exchange');
+            $returnUrl = $this->url->link('extension/payment/' . $this->_paymentMethodName . '/finish');
+            $exchangeUrl = $this->url->link('extension/payment/' . $this->_paymentMethodName . '/exchange');
 
             $apiStart->setFinishUrl($returnUrl);
             $apiStart->setExchangeUrl($exchangeUrl);
@@ -175,8 +175,8 @@ class Pay_Controller_Payment extends Controller
                 foreach ($results as $result) {
                     $taxesBefore = array_sum($arrTotals['taxes']);
                     if ($this->config->get($result['code'] . '_status')) {
-                        $this->load->model('total/' . $result['code']);
-                        $this->{'model_total_' . $result['code']}->getTotal($arrTotals);
+                        $this->load->model('extension/total/' . $result['code']);
+                        $this->{'model_extension_total_' . $result['code']}->getTotal($arrTotals);
                         $taxAfter = array_sum($arrTotals['taxes']);
                         $taxesForTotals[$result['code']] = $taxAfter - $taxesBefore;
                     }
@@ -198,7 +198,7 @@ class Pay_Controller_Payment extends Controller
             $result = $apiStart->doRequest();
 
             //transactie is aangemaakt, nu loggen
-            $modelName = 'model_payment_' . $this->_paymentMethodName;
+            $modelName = 'model_extension_payment_' . $this->_paymentMethodName;
             $this->$modelName->addTransaction($result['transaction']['transactionId'],
                 $order_info['order_id'], $this->_paymentOptionId, $amount,
                 $postData, $optionSub);
@@ -224,11 +224,11 @@ class Pay_Controller_Payment extends Controller
 
     public function finish()
     {
-        $this->load->model('payment/' . $this->_paymentMethodName);
+        $this->load->model('extension/payment/' . $this->_paymentMethodName);
 
         $transactionId = $_GET['orderId'];
 
-        $modelName = 'model_payment_' . $this->_paymentMethodName;
+        $modelName = 'model_extension_payment_' . $this->_paymentMethodName;
         try {
             $status = $this->$modelName->processTransaction($transactionId);
         } catch (Exception $e) {
@@ -246,11 +246,11 @@ class Pay_Controller_Payment extends Controller
 
     public function exchange()
     {
-        $this->load->model('payment/' . $this->_paymentMethodName);
+        $this->load->model('extension/payment/' . $this->_paymentMethodName);
 
 
         $transactionId = $_GET['order_id'];
-        $modelName = 'model_payment_' . $this->_paymentMethodName;
+        $modelName = 'model_extension_payment_' . $this->_paymentMethodName;
         if ($_GET['action'] == 'pending') {
             $message = 'ignoring PENDING';
         } else {
