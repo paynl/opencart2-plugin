@@ -253,10 +253,12 @@ class Pay_Controller_Payment extends Controller
         $modelName = 'model_extension_payment_' . $this->_paymentMethodName;
         if ($_GET['action'] == 'pending') {
             $message = 'ignoring PENDING';
+            die("TRUE|" . $message;);
         } else {
             try {
                 $status = $this->$modelName->processTransaction($transactionId);
                 $message = "Status updated to $status";
+                die("TRUE|" . $message;);
             } catch (Pay_Api_Exception $e) {
                 $message = "Api Error: " . $e->getMessage();
             } catch (Pay_Exception $e) {
@@ -264,8 +266,7 @@ class Pay_Controller_Payment extends Controller
             } catch (Exception $e) {
                 $message = "Unknown error: " . $e->getMessage();
             }
+            die("FALSE|" . $message;);
         }
-        echo "TRUE|" . $message;
-        die();
     }
 }
