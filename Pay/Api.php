@@ -5,7 +5,7 @@ class Pay_Api {
     const REQUEST_TYPE_POST = 1;
     const REQUEST_TYPE_GET = 0;
 
-    protected $_apiUrl = 'http://rest-api.pay.nl';
+    protected $_apiUrl = 'https://rest-api.pay.nl';
     protected $_version = 'v3';
     protected $_controller = '';
     protected $_action = '';
@@ -88,6 +88,7 @@ class Pay_Api {
 
             if ($result == false) {
                 $error = curl_error($ch);
+		throw new Pay_Api_Exception("Curl error: ".$error);
             }
             curl_close($ch);
 
