@@ -13,6 +13,8 @@ $_['text_paynl_bitcoin'] = '<a href="https://www.pay.nl" target="paynl"><img src
 $_['text_paynl_billink'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl" /></a>';
 $_['text_paynl_cartebleue'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl" /></a>';
 $_['text_paynl_clickandbuy'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl" /></a>';
+$_['text_paynl_capayable'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl" /></a>';
+$_['text_paynl_capayablegespreid'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl" /></a>';
 $_['text_paynl_ebon'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl"  /></a>';
 $_['text_paynl_fashioncheque'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl"  /></a>';
 $_['text_paynl_fashiongiftcard'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl"  /></a>';
