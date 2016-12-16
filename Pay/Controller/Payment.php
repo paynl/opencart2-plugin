@@ -249,11 +249,13 @@ class Pay_Controller_Payment extends Controller
     {
         $this->load->model('extension/payment/' . $this->_paymentMethodName);
 
-
-        $transactionId = $_GET['order_id'];
+        $transactionId = $_REQUEST['order_id'];
         $modelName = 'model_extension_payment_' . $this->_paymentMethodName;
-        if ($_GET['action'] == 'pending') {
+        if ($_REQUEST['action'] == 'pending') {
             $message = 'ignoring PENDING';
+	        die("TRUE|" . $message);
+        } elseif(substr($_REQUEST['action'],0,6) == 'refund'){
+            $message = 'ignoring REFUND';
             die("TRUE|" . $message);
         } else {
             try {
