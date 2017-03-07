@@ -44,7 +44,6 @@ if(!empty($optionSubList)){
                 $('#button-confirm').button('loading');
             },
             complete: function () {
-                $('#button-confirm').button('reset');
             },
             success: function (json) {
                 $('.alert').remove();

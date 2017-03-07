@@ -43,8 +43,7 @@ if(!empty($optionSubList)){
             beforeSend: function () {
                 $('#button-confirm').button('loading');
             },
-            complete: function () {
-                $('#button-confirm').button('reset');
+            complete: function () {            
             },
             success: function (json) {
                 $('.alert').remove();
