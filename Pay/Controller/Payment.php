@@ -160,8 +160,14 @@ class Pay_Controller_Payment extends Controller
             }
             foreach ($arrTotals['totals'] as $total_row) {
                 if (!in_array($total_row['code'], array('sub_total', 'tax', 'total'))) {
-                    $totalIncl = $total_row['value'] + $taxesForTotals[$total_row['code']];
-                    $apiStart->addProduct($total_row['code'], $total_row['title'], round($totalIncl * 100), 1, Pay_Helper::calculateTaxClass($totalIncl, $taxesForTotals[$total_row['code']]));
+                    if (array_key_exists($total_row['code'], $taxesForTotals)) {
+                        $total_row_tax = $taxesForTotals[$total_row['code']];
+                    } else {
+                        $total_row_tax = 0;
+                    }
+                    $totalIncl = $total_row['value'] + $total_row_tax;
+
+                    $apiStart->addProduct($total_row['code'], $total_row['title'], round($totalIncl * 100), 1, Pay_Helper::calculateTaxClass($totalIncl, $total_row_tax));
                 }
             }
 
