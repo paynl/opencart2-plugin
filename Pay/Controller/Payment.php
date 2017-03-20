@@ -113,7 +113,7 @@ class Pay_Controller_Payment extends Controller
 
             $arrEnduser = array(
                 'initials' => $initialsShipping,
-		'phoneNumber' => $order_info['telephone'],
+                'phoneNumber' => $order_info['telephone'],
                 'lastName' => $order_info['shipping_lastname'],
                 'language' => substr($order_info['language_code'], 0, 2),
                 'emailAddress' => $order_info['email'],
@@ -138,55 +138,30 @@ class Pay_Controller_Payment extends Controller
                     $price, $product['quantity'], Pay_Helper::calculateTaxClass($priceWithTax, $tax));
             }
 
-            // For some reason opencart decided to rewrite the total model getTotal functions
-            if (VERSION < 2.2) {
-                $arrTotals = array();
-                $total = 0;
-                $taxes = $this->cart->getTaxes();
-                $this->load->model('extension/extension');
-                $results = $this->model_extension_extension->getExtensions('total');
-                $taxesForTotals = array();
-                foreach ($results as $result) {
-                    $taxesBefore = array_sum($taxes);
-                    if ($this->config->get($result['code'] . '_status')) {
-                        $this->load->model('total/' . $result['code']);
-                        $this->{'model_total_' . $result['code']}->getTotal($arrTotals, $total, $taxes);
-                        $taxAfter = array_sum($taxes);
-                        $taxesForTotals[$result['code']] = $taxAfter - $taxesBefore;
-                    }
+            $taxes = $this->cart->getTaxes();
+            $this->load->model('extension/extension');
+            $results = $this->model_extension_extension->getExtensions('total');
+            $totals = array();
+            $total = 0;
+            $arrTotals = array(
+                'totals' => &$totals,
+                'taxes' => &$taxes,
+                'total' => &$total
+            );
+            $taxesForTotals = array();
+            foreach ($results as $result) {
+                $taxesBefore = array_sum($arrTotals['taxes']);
+                if ($this->config->get($result['code'] . '_status')) {
+                    $this->load->model('extension/total/' . $result['code']);
+                    $this->{'model_extension_total_' . $result['code']}->getTotal($arrTotals);
+                    $taxAfter = array_sum($arrTotals['taxes']);
+                    $taxesForTotals[$result['code']] = $taxAfter - $taxesBefore;
                 }
-                foreach ($arrTotals as $total_row) {
-                    if (!in_array($total_row['code'], array('sub_total', 'tax', 'total'))) {
-                        $totalIncl = $total_row['value'] + $taxesForTotals[$total_row['code']];
-                        $apiStart->addProduct($total_row['code'], $total_row['title'], round($totalIncl * 100), 1, Pay_Helper::calculateTaxClass($totalIncl, $taxesForTotals[$total_row['code']]));
-                    }
-                }
-            } else {
-                $taxes = $this->cart->getTaxes();
-                $this->load->model('extension/extension');
-                $results = $this->model_extension_extension->getExtensions('total');
-                $totals = array();
-                $total = 0;
-                $arrTotals = array(
-                    'totals' => &$totals,
-                    'taxes' => &$taxes,
-                    'total' => &$total
-                );
-                $taxesForTotals = array();
-                foreach ($results as $result) {
-                    $taxesBefore = array_sum($arrTotals['taxes']);
-                    if ($this->config->get($result['code'] . '_status')) {
-                        $this->load->model('extension/total/' . $result['code']);
-                        $this->{'model_extension_total_' . $result['code']}->getTotal($arrTotals);
-                        $taxAfter = array_sum($arrTotals['taxes']);
-                        $taxesForTotals[$result['code']] = $taxAfter - $taxesBefore;
-                    }
-                }
-                foreach ($arrTotals['totals'] as $total_row) {
-                    if (!in_array($total_row['code'], array('sub_total', 'tax', 'total'))) {
-                        $totalIncl = $total_row['value'] + $taxesForTotals[$total_row['code']];
-                        $apiStart->addProduct($total_row['code'], $total_row['title'], round($totalIncl * 100), 1, Pay_Helper::calculateTaxClass($totalIncl, $taxesForTotals[$total_row['code']]));
-                    }
+            }
+            foreach ($arrTotals['totals'] as $total_row) {
+                if (!in_array($total_row['code'], array('sub_total', 'tax', 'total'))) {
+                    $totalIncl = $total_row['value'] + $taxesForTotals[$total_row['code']];
+                    $apiStart->addProduct($total_row['code'], $total_row['title'], round($totalIncl * 100), 1, Pay_Helper::calculateTaxClass($totalIncl, $taxesForTotals[$total_row['code']]));
                 }
             }
 
@@ -253,8 +228,8 @@ class Pay_Controller_Payment extends Controller
         $modelName = 'model_extension_payment_' . $this->_paymentMethodName;
         if ($_REQUEST['action'] == 'pending') {
             $message = 'ignoring PENDING';
-	        die("TRUE|" . $message);
-        } elseif(substr($_REQUEST['action'],0,6) == 'refund'){
+            die("TRUE|" . $message);
+        } elseif (substr($_REQUEST['action'], 0, 6) == 'refund') {
             $message = 'ignoring REFUND';
             die("TRUE|" . $message);
         } else {
