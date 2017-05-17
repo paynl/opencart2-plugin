@@ -49,7 +49,7 @@ if(!empty($optionSubList)){
                 $('.alert').remove();
 
                 if (json['error']) {
-                    $('#payment').before('<div class="alert alert-danger">' + json['error'] + '</div>');
+                    $('#paynl_payment').before('<div class="alert alert-danger">' + json['error'] + '</div>');
                 }
 
                 if (json['success']) {
