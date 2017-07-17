@@ -71,6 +71,9 @@ class Pay_Controller_Payment extends Controller
 
             $apiStart->setPaymentOptionId($this->_paymentOptionId);
             $amount = round($order_info['total'] * 100);
+            if (isset($order_info['currency_value']) && $order_info['currency_value'] != 1) {
+                $amount = round($amount * $order_info['currency_value']);
+            }
             $apiStart->setAmount($amount);
 
             $apiStart->setCurrency($order_info['currency_code']);
@@ -127,10 +130,15 @@ class Pay_Controller_Payment extends Controller
 
             //Producten toevoegen
             foreach ($this->cart->getProducts() as $product) {
-                $priceWithTax = $this->tax->calculate($product['price'],
+                $price = $product['price'];
+                if (isset($order_info['currency_value']) && $order_info['currency_value'] != 1) {
+                    $price = $price * $order_info['currency_value'];
+                }
+
+                $priceWithTax = $this->tax->calculate($price,
                     $product['tax_class_id'], $this->config->get('config_tax'));
 
-                $tax = $priceWithTax - $product['price'];
+                $tax = $priceWithTax - $price;
 
                 $price = round($priceWithTax * 100);
                 $totalAmount += $price * $product['quantity'];
@@ -167,13 +175,14 @@ class Pay_Controller_Payment extends Controller
                     }
                     $totalIncl = $total_row['value'] + $total_row_tax;
 
+                    if (isset($order_info['currency_value']) && $order_info['currency_value'] != 1) {
+                        $totalIncl = $totalIncl * $order_info['currency_value'];
+                        $total_row_tax = $total_row_tax * $order_info['currency_value'];
+                    }
+
                     $apiStart->addProduct($total_row['code'], $total_row['title'], round($totalIncl * 100), 1, Pay_Helper::calculateTaxClass($totalIncl, $total_row_tax));
                 }
             }
-
-
-            $amount = round($order_info['total'] * 100);
-
 
             $postData = $apiStart->getPostData();
 
