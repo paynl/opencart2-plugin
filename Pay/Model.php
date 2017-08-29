@@ -267,7 +267,9 @@ class Pay_Model extends Model {
         $state = $result['paymentDetails']['state'];
         $status = self::STATUS_PENDING;
         $orderStatusId = $statusPending;
-        if ($state == 100) {
+        if ($state == 100 // PAID
+        ||  $state == 95) // AUTHORIZED
+        {
             $status = self::STATUS_COMPLETE;
             $orderStatusId = $statusComplete;
         } else if ($state < 0) {
@@ -286,7 +288,7 @@ class Pay_Model extends Model {
         //order updaten
         $order_info = $this->model_checkout_order->getOrder($transaction['orderId']);
         if ($order_info['order_status_id'] != $orderStatusId) {
-            //alleen updaten als de status daadwerkelijk veranderd, ivm exchange, de order wordt 2 keer aangepast
+            //alleen updaten als de status daadwerkelijk devveranderd, ivm exchange, de order wordt 2 keer aangepast
             if ($settings[$this->_paymentMethodName . '_send_status_updates'] == 1) {
                 $send_status_update = true;
             } else {

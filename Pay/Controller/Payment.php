@@ -98,8 +98,16 @@ class Pay_Controller_Payment extends Controller
                 'countryCode' => $order_info['shipping_iso_code_2'],
             );
 
-            $initialsPayment = substr($order_info['payment_firstname'], 0, 1);
-            $initialsShipping = substr($order_info['shipping_firstname'], 0, 1);
+            // Exception for Klarna; Klarna needs whole firstName
+            if($this->_paymentOptionId == 1717)
+            {
+	            $initialsPayment = $order_info['payment_firstname'];
+	            $initialsShipping = $order_info['shipping_firstname'];
+            }else
+            {
+	            $initialsPayment = substr($order_info['payment_firstname'], 0, 1);
+	            $initialsShipping = substr($order_info['shipping_firstname'], 0, 1);
+            }
 
             $strAddress = $order_info['payment_address_1'] . ' ' . $order_info['payment_address_2'];
             list($street, $housenumber) = Pay_Helper::splitAddress($strAddress);
