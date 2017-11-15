@@ -29,6 +29,7 @@ class Pay_Controller_Payment extends Controller
             die('Payment method not available');
         }
 
+        $this->data['paymentOptionId'] = $this->_paymentOptionId;
         $this->data['instructions'] = $settings[$this->_paymentMethodName . '_instructions'];
 
         $this->data['optionSubList'] = array();
@@ -131,6 +132,10 @@ class Pay_Controller_Payment extends Controller
                 'address' => $arrShippingAddress,
                 'invoiceAddress' => $arrPaymentAddress,
             );
+
+	        if (!empty($_POST['dob'])) {
+		        $arrEnduser['dob'] = $_POST['dob'];
+	        }
 
             $apiStart->setEnduser($arrEnduser);
 
