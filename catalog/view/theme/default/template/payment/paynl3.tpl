@@ -1,5 +1,6 @@
-<?php define('ACHTERAF_BETAALMETHODEN', json_encode(array(739,1924,740,1672,1675,1673,1744,1813,1702,1703,1717))); ?>
-
+<?php
+$arrPaylater = array(739,1924,740,1672,1675,1673,1744,1813,1702,1703,1717);
+?>
 <div id="paynl_payment"></div>
 <?php
 if(!empty($instructions)){
@@ -9,30 +10,31 @@ if(!empty($instructions)){
 </div>
 <?php } ?>
 
-<?php if(in_array($paymentOptionId,json_decode(ACHTERAF_BETAALMETHODEN))) { ?>
+<?php if(in_array($paymentOptionId,$arrPaylater)) { ?>
 
-    <div class="row">
+<div class="row">
+    <div class="col-md-3 pull-right">
         <div class="alert alert-danger" id="dobEmpty">Geboorte datum is verplicht</div>
         <div class="alert alert-danger" id="dobInvalid">Geboorte datum is onjuist</div>
         <div class="form-group">
-            <label>Geboortedatum</label>
+            <label for="dob">Geboortedatum</label>
             <input type="text" placeholder="dd-mm-yyyy" class="form-control" id="dob"/>
         </div>
     </div>
+</div>
 
 
 <?php } ?>
 <?php
 if(!empty($optionSubList)){
 ?>
-<div class="buttons">
-    <div class="pull-right">
-
+<div class="row">
+    <div class="col-md-3 pull-right">
         <select class="form-control" id="optionsub">
             <option value=''>Kies uw bank</option>
-            <?php 
-            foreach($optionSubList as $optionSub){
-            echo "<option value='".$optionSub['id']."'>".$optionSub['name']."</option>";
+            <?php
+        foreach($optionSubList as $optionSub){
+        echo "<option value='".$optionSub['id']."'>".$optionSub['name']."</option>";
             }
             ?>
         </select>
@@ -41,12 +43,14 @@ if(!empty($optionSubList)){
 <?php } ?>
 <div class="buttons">
     <div class="pull-right">
-        <input onclick="startTransaction();"  value="<?php echo $button_confirm; ?>" type="button" data-loading-text="<?php echo $button_loading; ?>"  id="button-confirm" class="btn btn-primary" />
+        <input onclick="startTransaction();" value="<?php echo $button_confirm; ?>" type="button"
+               data-loading-text="<?php echo $button_loading; ?>" id="button-confirm" class="btn btn-primary"/>
     </div>
 </div>
 
 <script type="text/javascript">
     jQuery('.alert').hide();
+
     function startTransaction() {
         var data = {};
         if (jQuery('#optionsub') != undefined) {
@@ -54,8 +58,7 @@ if(!empty($optionSubList)){
         }
 
         if (jQuery('#dob') != undefined) {
-            if(jQuery('#dob').val() == "")
-            {
+            if (jQuery('#dob').val() == "") {
                 jQuery('#dobEmpty').show();
                 return;
             }
@@ -66,12 +69,11 @@ if(!empty($optionSubList)){
 
             var dob = jQuery('#dob').val().match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
 
-            if(!dob
-            || !new Date(dob[3], dob[2], dob[1]))
-            {
+            if (!dob
+                || !new Date(dob[3], dob[2], dob[1])) {
                 jQuery('#dobInvalid').show();
                 return;
-            }else{
+            } else {
                 jQuery('#dobInvalid').hide();
             }
             data.dob = jQuery('#dob').val();
