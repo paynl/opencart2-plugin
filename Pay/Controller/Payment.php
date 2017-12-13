@@ -132,6 +132,13 @@ class Pay_Controller_Payment extends Controller
                 'address' => $arrShippingAddress,
                 'invoiceAddress' => $arrPaymentAddress,
             );
+           if($order_info['shipping_company']){
+               $arrEnduser['company'] = array();
+               $arrEnduser['company']['name'] = $order_info['shipping_company'];
+           }elseif($order_info['payment_company']){
+               $arrEnduser['company'] = array();
+               $arrEnduser['company']['name'] = $order_info['payment_company'];
+           }
 
 	        if (!empty($_POST['dob'])) {
 		        $arrEnduser['dob'] = $_POST['dob'];
