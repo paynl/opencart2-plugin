@@ -50,11 +50,11 @@ if(!empty($optionSubList)){
 
     function startTransaction() {
         var data = {};
-        if (jQuery('#optionsub') != undefined) {
+        if (jQuery('#optionsub') != undefined && jQuery('#optionsub').val() != undefined) {
             data.optionSubId = jQuery('#optionsub').val();
         }
 
-        if (jQuery('#dob') != undefined) {
+        if (jQuery('#dob') != undefined && jQuery('#dob').val() != undefined) {
             if (jQuery('#dob').val() == "") {
                 if (typeof triggerLoadingOff === 'function') {
                     // journal checkout cancel loading
