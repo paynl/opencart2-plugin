@@ -78,8 +78,7 @@ class Pay_Api {
             } else {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $strData);
             }
-           
-          
+
             curl_setopt($ch, CURLOPT_URL, $apiUrl);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
