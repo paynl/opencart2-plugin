@@ -155,8 +155,7 @@ class Pay_Controller_Payment extends Controller
                     $price = $price * $order_info['currency_value'];
                 }
 
-                $priceWithTax = $this->tax->calculate($price,
-                    $product['tax_class_id'], $this->config->get('config_tax'));
+                $priceWithTax = $this->tax->calculate($price, $product['tax_class_id']);
 
                 $tax = $priceWithTax - $price;
 
