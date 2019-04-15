@@ -2,9 +2,11 @@
 // Text
 $_['text_payment'] = 'Betaling';
 
-
 $_['button_save'] = 'Opslaan';
 $_['button_cancel'] = 'Annuleren';
+
+$_['text_display_icon'] = 'Icoon weergeven';
+$_['text_display_icon_tooltip'] = 'Selecteer hier of je een icoon wilt weergeven en welke grootte.';
 
 $_['text_paynl_afterpay']  = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl" /></a>';
 $_['text_paynl_afterpayem'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl" /></a>';

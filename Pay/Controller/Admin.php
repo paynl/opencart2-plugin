@@ -182,6 +182,13 @@ class Pay_Controller_Admin extends Controller {
             $this->data['instructions'] = $settings[$this->_paymentMethodName . '_instructions'];
         }
 
+        $this->data['display_icon'] = '';
+        if (isset($this->request->post[$this->_paymentMethodName . '_display_icon'])) {
+            $this->data['display_icon'] = $this->request->post[$this->_paymentMethodName . '_display_icon'];
+        } elseif (isset($settings[$this->_paymentMethodName . '_display_icon'])) {
+            $this->data['display_icon'] = $settings[$this->_paymentMethodName . '_display_icon'];
+        }
+
 
 
         $this->data['heading_title'] = $this->document->getTitle();
@@ -189,6 +196,8 @@ class Pay_Controller_Admin extends Controller {
         $this->data['button_save'] = $this->language->get('button_save');
         $this->data['button_cancel'] = $this->language->get('button_cancel');
 
+        $this->data['text_display_icon'] = $this->language->get('text_display_icon');
+        $this->data['text_display_icon_tooltip'] = $this->language->get('text_display_icon_tooltip');
 
         $this->data['text_enabled'] = $this->language->get('text_enabled');
         $this->data['text_disabled'] = $this->language->get('text_disabled');
@@ -199,19 +208,19 @@ class Pay_Controller_Admin extends Controller {
         $this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
         $this->data['action'] = $this->url->link('extension/payment/' . $this->_paymentMethodName, 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', 'SSL');
 
         $this->data['breadcrumbs'] = array();
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
             'separator' => false
         );
 
         $this->data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_payment'),
-            'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', 'SSL'),
             'separator' => ' :: '
         );
 
@@ -228,8 +237,6 @@ class Pay_Controller_Admin extends Controller {
         $this->data['footer'] = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view('payment/paynl3.tpl', $this->data));
-        
-       // $this->response->setOutput($this->render(true), $this->config->get('config_compression')); //v1.3.3+F
     }
 
     public function validate() {

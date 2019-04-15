@@ -64,7 +64,30 @@
                             <?php } ?>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               for="<?php echo $payment_method_name; ?>_display_icon">
+                            <span data-toggle="tooltip" title="<?php echo $text_display_icon_tooltip; ?>">
+                                <?php echo $text_display_icon; ?>
+                            </span></label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="<?php echo $payment_method_name; ?>_display_icon">
+                                <option value=""
+                                <?php echo $display_icon == '' ? 'selected="selected"': '' ?>
+                                ><?php echo $text_disabled; ?></option>
+                                <option value="20x20"
+                                <?php echo $display_icon == '20x20' ? 'selected="selected"': '' ?>>20 x 20</option>
+                                <option value="25x25"
+                                <?php echo $display_icon == '25x25' ? 'selected="selected"': '' ?>>25 x 25</option>
+                                <option value="50x50"
+                                <?php echo $display_icon == '50x50' ? 'selected="selected"': '' ?>>50 x 50</option>
+                                <option value="75x75"
+                                <?php echo $display_icon == '75x75' ? 'selected="selected"': '' ?>>75 x 75</option>
+                                <option value="100x100"
+                                <?php echo $display_icon == '100x100' ? 'selected="selected"': '' ?>>100 x 100</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label"
                                for="<?php echo $payment_method_name; ?>_label">Label</label>

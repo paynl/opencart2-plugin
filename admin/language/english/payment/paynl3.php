@@ -1,10 +1,13 @@
 <?php
 // Text
 $_['text_payment'] = 'Payment';
-
+$_['text_disabled'] = 'Disabled';
 
 $_['button_save'] = 'Save';
 $_['button_cancel'] = 'Cancel';
+
+$_['text_display_icon'] = 'Display icon';
+$_['text_display_icon_tooltip'] = 'Select if you want to display an icon and the size';
 
 $_['text_paynl_afterpay']  = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl" /></a>';
 $_['text_paynl_afterpayem'] = '<a href="https://www.pay.nl" target="paynl"><img src="view/image/payment/paynl.png" alt="Pay.nl" title="Pay.nl" /></a>';
