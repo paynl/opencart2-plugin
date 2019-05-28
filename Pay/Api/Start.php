@@ -118,7 +118,7 @@ class Pay_Api_Start extends Pay_Api {
      */
     public function setEnduser($enduser) {
 
-        if(strlen($enduser['address']['streetNumber']) >= 15 || strlen($enduser['invoiceAddress']['streetNumber']) >= 15){
+        if (strlen($enduser['address']['streetNumber']) >= 45 || strlen($enduser['invoiceAddress']['streetNumber']) >= 45) {
             throw new Pay_Exception('Huisnummer is te lang, controleer a.u.b. het adres');
         }
         $this->_enduser = $enduser;

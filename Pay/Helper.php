@@ -80,8 +80,8 @@ class Pay_Helper
             $strStreetName = implode('', $a);
         }
 
-        // if streetnumber > 10 the api will throw an error, so we just omit the address
-        if(strlen($strStreetNumber)>10){
+        // if streetnumber > 45 the api will throw an error, so we just omit the address
+        if (strlen($strStreetNumber) > 45) {
             return array('', '');
         }
 
