@@ -7,7 +7,7 @@ class ControllerExtensionPaymentPaynlCapayableGespreid extends Pay_Controller_Ad
     protected $_paymentOptionId = 1813;
     protected $_paymentMethodName = 'paynl_capayablegespreid';
     
-    protected $_defaultLabel = 'Capayable Gespreid Betalen';
+    protected $_defaultLabel = 'in3 keer betalen, 0% rente';
     
     
 }
