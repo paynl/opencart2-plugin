@@ -36,6 +36,7 @@ $_['text_paynl_givacard'] = '<a href="https://www.pay.nl" target="paynl"><img sr
 $_['text_paynl_ideal'] = '<a href="https://www.pay.nl" target="paynl"><img src="https://static.pay.nl/generic/images/50x50/logo.png" alt="Pay.nl" title="Pay.nl" /></a>';
 $_['text_paynl_incasso'] = '<a href="https://www.pay.nl" target="paynl"><img src="https://static.pay.nl/generic/images/50x50/logo.png" alt="Pay.nl" title="Pay.nl"/></a>';
 $_['text_paynl_klarna'] = '<a href="https://www.pay.nl" target="paynl"><img src="https://static.pay.nl/generic/images/50x50/logo.png" alt="Pay.nl" title="Pay.nl"/></a>';
+$_['text_paynl_klarnakp'] = '<a href="https://www.pay.nl" target="paynl"><img src="https://static.pay.nl/generic/images/50x50/logo.png" alt="Pay.nl" title="Pay.nl"/></a>';
 $_['text_paynl_maestro'] = '<a href="https://www.pay.nl" target="paynl"><img src="https://static.pay.nl/generic/images/50x50/logo.png" alt="Pay.nl" title="Pay.nl" /></a>';
 $_['text_paynl_minitixsms'] = '<a href="https://www.pay.nl" target="paynl"><img src="https://static.pay.nl/generic/images/50x50/logo.png" alt="Pay.nl" title="Pay.nl"  /></a>';
 $_['text_paynl_mistercash'] = '<a href="https://www.pay.nl" target="paynl"><img src="https://static.pay.nl/generic/images/50x50/logo.png" alt="Pay.nl" title="Pay.nl"  /></a>';
