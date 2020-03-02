@@ -35,6 +35,7 @@ $_['text_paynl_giropay'] = $url;
 $_['text_paynl_givacard'] = $url;
 $_['text_paynl_ideal'] = $url;
 $_['text_paynl_incasso'] = $url;
+$_['text_paynl_klarna'] = $url;
 $_['text_paynl_klarnakp'] = $url;
 $_['text_paynl_maestro'] = $url;
 $_['text_paynl_minitixsms'] = $url;
