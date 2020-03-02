@@ -13,9 +13,9 @@ class Pay_Controller_Admin extends Controller {
     public function index() {
         $this->load->language('extension/payment/' . $this->_paymentMethodName); // . $payment);
         $this->load->model('setting/setting');
-        $this->document->setTitle('Pay.nl - ' . $this->_defaultLabel);
+        $this->document->setTitle('PAY. - ' . $this->_defaultLabel);
 
-        $this->data['text_edit'] = 'Pay.nl - ' . $this->_defaultLabel; 
+        $this->data['text_edit'] = 'PAY. - ' . $this->_defaultLabel;
                 
         $this->data['error_warning'] = '';
         $this->data['error_apitoken'] = '';
@@ -269,7 +269,7 @@ class Pay_Controller_Admin extends Controller {
                 }
             } 
             catch(Pay_Api_Exception $e){
-                $this->error['apitoken'] = 'De Pay.nl Api gaf de volgende fout: '.$e->getMessage();
+                $this->error['apitoken'] = 'De PAY. Api gaf de volgende fout: '.$e->getMessage();
             }
             catch(Pay_Exception $e){
                 $this->error['apitoken'] = 'Er is een fout opgetreden: '.$e->getMessage();
