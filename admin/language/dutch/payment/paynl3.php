@@ -11,16 +11,20 @@ $url = '<a href="https://www.pay.nl" target="_blank"><img src="https://static.pa
 
 $_['text_paynl_afterpay']  = $url;
 $_['text_paynl_afterpayem'] = $url;
+$_['text_paynl_alipay'] = $url;
+$_['text_paynl_amazonpay'] = $url;
 $_['text_paynl_amex']  = $url;
 $_['text_paynl_applepay']  = $url;
 $_['text_paynl_bitcoin'] = $url;
 $_['text_paynl_billink'] = $url;
+$_['text_paynl_cartasi'] = $url;
 $_['text_paynl_cartebleue'] = $url;
 $_['text_paynl_capayable'] = $url;
 $_['text_paynl_capayablegespreid'] = $url;
 $_['text_paynl_cashly'] = $url;
 $_['text_paynl_clickandbuy'] = $url;
 $_['text_paynl_creditclick'] = $url;
+$_['text_paynl_dankort'] = $url;
 $_['text_paynl_ebon'] = $url;
 $_['text_paynl_eps'] = $url;
 $_['text_paynl_fashioncheque'] = $url;
