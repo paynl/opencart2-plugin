@@ -6,7 +6,7 @@ $_['button_cancel'] = 'Cancel';
 
 $version = '1.7.0';
 $css = 'position: relative;top:0px;display: inline;left: 10px;';
-$url = '<a href="https://www.pay.nl" target="_blank"><img src="https://static.pay.nl/generic/images/50x50/logo.png" alt="PAY." title="PAY."/></a>' .
+$url = '<a href="https://www.pay.nl" target="_blank"><img style="width: 50px;" src="view/image/payment/main_pay_logo.png" alt="PAY." title="PAY."/></a>' .
     '<div style="' . $css . '">Version: ' . $version . '</div>';
 
 $_['text_paynl_afterpay']  = $url;
