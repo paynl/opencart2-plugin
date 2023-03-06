@@ -7,7 +7,7 @@ class ControllerExtensionPaymentPaynlAfterpay extends Pay_Controller_Admin {
     protected $_paymentOptionId = 739;
     protected $_paymentMethodName = 'paynl_afterpay';
     
-    protected $_defaultLabel = 'Afterpay';
+    protected $_defaultLabel = 'Riverty was (AfterPay)';
     
     
 }
